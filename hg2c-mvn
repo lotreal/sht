@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+IMAGE=maven:alpine
+WORK=/src
+
+docker run --rm -ti \
+       --network dc0 \
+       -w $WORK \
+       -v $HOME/.m2:/root/.m2 -v `pwd`:$WORK $IMAGE bash
+
+# /usr/share/maven# cat conf/settings.xml

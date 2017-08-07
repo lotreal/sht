@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+get_package_name() {
+    PKG=$(git config --get remote.origin.url)
+
+    PKG=${PKG#git@}
+    PKG=${PKG%.git}
+    PKG=${PKG//:/\/}
+    echo $PKG
+}
+
+PACKAGE=$(get_package_name)
+IMAGE=hg2c/golang
+GOPATH=/go/src/$PACKAGE
+
+docker run --rm -ti -w $GOPATH -v `pwd`:$GOPATH $IMAGE bash

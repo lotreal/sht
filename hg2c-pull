@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+IMAGE=$1
+
+if [[ $IMAGE != *":"* ]]; then
+    IMAGE=${IMAGE}:latest
+fi
+
+pull() {
+    echo docker pull [$1]
+    docker pull $1
+}
+
+if [ "${IMAGE#hg2c/}" != "${IMAGE}" ]; then
+    MIRROR_IMAGE=registry.cn-hangzhou.aliyuncs.com/${IMAGE}
+    pull ${MIRROR_IMAGE}
+    echo docker tag ${MIRROR_IMAGE} ${IMAGE}
+    docker tag ${MIRROR_IMAGE} ${IMAGE}
+    exit 0
+fi
+
+pull ${IMAGE}

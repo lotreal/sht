@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+IMAGE=tomcat:alpine
+WORK=/usr/local/tomcat/webapps/ROOT
+
+docker run --rm -ti \
+       --network dc0 \
+       -w $WORK \
+       -v $HOME/.m2:/root/.m2 \
+       -v `pwd`:$WORK \
+       -p 8080 \
+       $IMAGE
+
+
+# /usr/share/maven# cat conf/settings.xml

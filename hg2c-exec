@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+FILTER=$1
+shift
+
+COMMAND=${1:-bash}
+
+if [ -z "$FILTER" ]; then
+    CONTAINER=$(docker ps -lq)
+else
+    CONTAINER=$(docker ps | grep $FILTER | awk '{print $1; exit}')
+fi
+
+docker exec -it $CONTAINER $COMMAND
