@@ -12,13 +12,18 @@ do
     esac
 done
 
-# TODO: if env set docker-bridge
 docker-compose -f <(
-cat $FILE
-cat <<EOF
+    cat $FILE
+    if [ ! -z ${HG2C_NETWORK+x} ]; then
+        cat <<EOF
 networks:
   default:
     external:
-      name: dc0
+      name: ${HG2C_NETWORK}
 EOF
+    fi
 ) --project-directory $(pwd) $OPTS
+
+
+# docker network create --driver=bridge --subnet=10.43.0.0/16 dc0
+# export HG2C_NETWORK=dc0

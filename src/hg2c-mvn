@@ -2,9 +2,21 @@
 IMAGE=maven:alpine
 WORK=/src
 
+OPTS=
+
+if [ ! -z ${HG2C_NETWORK+x} ]; then
+    OPTS="$OPTS --network ${HG2C_NETWORK}"
+fi
+
+if [ ! -z ${HG2C_M2+x} ]; then
+    OPTS="$OPTS -v ${HG2C_M2}:/root/.m2"
+else
+    OPTS="$OPTS -v ${HOME}/.m2:/root/.m2"
+fi
+
 docker run --rm -ti \
-       --network dc0 \
+       $OPTS \
        -w $WORK \
-       -v $HOME/.m2:/root/.m2 -v `pwd`:$WORK $IMAGE bash
+       -v `pwd`:$WORK $IMAGE bash
 
 # /usr/share/maven# cat conf/settings.xml
