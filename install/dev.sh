@@ -7,7 +7,7 @@ INSTALL_DIR=/usr/local/bin
 
 while read src; do
     echo ln -sf ${SRC_DIR}/$src ${INSTALL_DIR}/$src
-    ln -sf ${SRC_DIR}/$src ${INSTALL_DIR}/$src
+    sudo ln -sf ${SRC_DIR}/$src ${INSTALL_DIR}/$src
 done << EOF
 $(ls $SRC_DIR)
 EOF
