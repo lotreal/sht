@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+import() {
+    ssh $2 "docker save $1" | pv | docker load
+}
+
+export() {
+    docker save $1 | pv | ssh $2 "docker load"
+}
+
+sync_image() {
+    local TARGET=$1
+    local IMAGE=$2
+
+    LOCAL=$(docker inspect -f '{{ .Created }}' $IMAGE 2>/dev/null)
+    REMOTE=$(ssh $TARGET "docker inspect -f '{{ .Created }}' $IMAGE 2>/dev/null")
+
+    if [[ "${REMOTE}" == "" ]]; then
+        if [[ "${LOCAL}" == "" ]]; then
+            echo "ERR : can't find $IMAGE on localhost or ${TARGET}"
+            return
+        fi
+
+        echo "==> : ${IMAGE}@localhost ($LOCAL) ==> ${TARGET}"
+        export $IMAGE $TARGET
+        return
+    else
+        if [[ "${LOCAL}" == "" ]]; then
+            echo "<== : localhost <== ${IMAGE}@${TARGET} ($REMOTE)"
+            import $IMAGE $TARGET
+            return
+        fi
+    fi
+
+
+    if [[ "$LOCAL" == "$REMOTE" ]]; then
+        echo "... : ${IMAGE}@localhost ($LOCAL) === ${IMAGE}@${TARGET} ($REMOTE)"
+        return
+    else
+        if [[ "$LOCAL" > "$REMOTE" ]]; then
+            echo "==> : ${IMAGE}@localhost ($LOCAL) ==> ${IMAGE}@${TARGET} ($REMOTE)"
+            export $IMAGE $TARGET
+            return
+        else
+            echo "<== : ${IMAGE}@localhost ($LOCAL) <== ${IMAGE}@${TARGET} ($REMOTE)"
+            import $IMAGE $TARGET
+            return
+        fi
+    fi
+}
+
+usage()
+{
+    cat <<EOF
+Example 1:
+  iw sync-docker-image root@images.backup busybox:latest
+
+Example 2:
+  cat docker.images
+
+    gcr.io/google_containers/kube-proxy-amd64:v1.9.2
+    gcr.io/google_containers/kube-scheduler-amd64:v1.9.2
+
+  iw sync-docker-image root@images.backup docker.images
+EOF
+    exit 1
+}
+
+if [ $# -ne 2 ] ; then
+    usage
+fi
+
+DIST=$1
+IMAGES=$2
+
+if [ -s "$IMAGES" ]
+then
+    echo "Sync docker images with <$DIST> from file <$IMAGES>"
+    # cat $IMAGES | xargs -I % iw sync-docker-image $DIST %
+    for i in $(<$IMAGES)
+    do
+        (
+            sync_image $DIST $i
+        )
+    done
+else
+    echo "Sync docker images <$IMAGES> with <$DIST>"
+    sync_image $DIST $IMAGES
+fi
+
+# TEST
+# sync_image ub alpine
+# sync_image ub java
+# sync_image ub tensorflow/tensorflow:latest-gpu-py3
+# sync_image ub jenkins/jenkins:lts
+# sync_image ub jenkins/jenkins:lts1
