@@ -4,6 +4,8 @@ CMD=${_WD}/cmd
 
 if [ "$#" -lt 1 ]; then
     cat <<EOF
+iw helm new drone
+
 Commands:
 
   launch		search service in osx launchagents dirs.
@@ -18,4 +20,5 @@ shift
 
 ARG=$@
 
+echo source $SUB $ARG
 source $SUB $ARG

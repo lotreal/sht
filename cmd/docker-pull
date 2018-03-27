@@ -10,12 +10,9 @@ pull() {
     docker pull $1
 }
 
-if [ "${IMAGE#hg2c/}" != "${IMAGE}" ]; then
+
     MIRROR_IMAGE=registry.cn-hangzhou.aliyuncs.com/${IMAGE}
     pull ${MIRROR_IMAGE}
     echo docker tag ${MIRROR_IMAGE} ${IMAGE}
     docker tag ${MIRROR_IMAGE} ${IMAGE}
     exit 0
-fi
-
-pull ${IMAGE}
