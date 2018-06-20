@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+for i in HciCloudTts callmec callmed callmeinstructions callmeserver callmet framework wechat_back wechat_front; do
+    svn checkout http://192.168.200.245:8989/code/$i
+done

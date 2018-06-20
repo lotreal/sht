@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+HOST=$1
+
+run ssh $HOST mkdir -p $WORKDIR
+run rsync -avzhe ssh --delete --progress $WORKDIR/ $HOST:$WORKDIR/

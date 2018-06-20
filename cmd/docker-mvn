@@ -17,6 +17,6 @@ fi
 docker run --rm -ti \
        $OPTS \
        -w $WORK \
-       -v `pwd`:$WORK $IMAGE bash
+       -v `pwd -P`:$WORK $IMAGE bash
 
 # /usr/share/maven# cat conf/settings.xml

@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+read -r -d '' IMAGES <<- EOM
+gcr.io/spinnaker-marketplace/clouddriver:2.0.0-20180221152902
+gcr.io/spinnaker-marketplace/echo:0.8.0-20180221133510
+gcr.io/spinnaker-marketplace/deck:2.1.0-20180221143146
+gcr.io/spinnaker-marketplace/igor:0.9.0-20180221133510
+gcr.io/spinnaker-marketplace/orca:0.10.0-20180221133510
+gcr.io/spinnaker-marketplace/gate:0.10.0-20180221133510
+gcr.io/spinnaker-marketplace/front50:0.9.0-20180221133510
+gcr.io/spinnaker-marketplace/rosco:0.5.0-20180221133510
+EOM
+
+rename() {
+    ORIGIN=$1
+    NEWNAME=$ORIGIN
+    NEWNAME=${NEWNAME/gcr.io\//cncr*}
+    NEWNAME=${NEWNAME//\//-}
+    NEWNAME=${NEWNAME/\*/\/}
+
+    echo "docker pull $IMAGE && docker tag $IMAGE $NEWNAME && docker push $NEWNAME"
+}
+
+for IMAGE in $IMAGES
+do
+    rename $IMAGE
+done
+
+# echo "$IMAGE => $NEWNAME"
+# CMD="docker pull $IMAGE && docker tag $IMAGE $NEWNAME && docker push $NEWNAME"
+
+# ssh proxy "$CMD"
+# if [[ $IMAGE != *":"* ]]; then
+#     IMAGE=${IMAGE}:latest
+# fi
+
+# pull() {
+#     echo docker pull [$1]
+#     docker pull $1
+# }
+
+
+#     MIRROR_IMAGE=registry.cn-hangzhou.aliyuncs.com/${IMAGE}
+#     pull ${MIRROR_IMAGE}
+#     echo docker tag ${MIRROR_IMAGE} ${IMAGE}
+#     docker tag ${MIRROR_IMAGE} ${IMAGE}
+#     exit 0

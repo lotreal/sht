@@ -11,10 +11,14 @@ sync_image() {
     local TARGET=$1
     local IMAGE=$2
 
-    # LOCAL_IMAGE=$(docker images -q $2 2> /dev/null)
-
+    set +o errexit
     LOCAL=$(docker inspect -f '{{ .Created }}' $IMAGE 2>/dev/null)
     REMOTE=$(ssh $TARGET "docker inspect -f '{{ .Created }}' $IMAGE 2>/dev/null")
+    set -o errexit
+
+    echo "R${REMOTE}R"
+    exit
+    REMOTE=""
 
     if [[ "${REMOTE}" == "" ]]; then
         if [[ "${LOCAL}" == "" ]]; then
@@ -76,9 +80,9 @@ if [ $# -ne 2 ] ; then
     usage
 fi
 
-# cat images | xargs -I % ./hg2c-sync ub %
 sync_image $1 $2
-
+# cat images | xargs -I % ./hg2c-sync ub %
+# docker images --format "{{.Repository}}:{{.Tag}}" | xargs -I % ./cmd/docker-sync cq03.huwo.io %
 
 # docker save <image> | bzip2 | pv | \
     #     ssh user@host 'bunzip2 | docker load'

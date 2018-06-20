@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+GOPRO_LOCAL=/Users/luotao/Pictures/GoPro/
+GOPRO_REMOTE=thresh:/volume1/video/family/gopro/
+
+rsync -rltDvpo $GOPRO_LOCAL $GOPRO_REMOTE

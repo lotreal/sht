@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# mount_smbfs '//luotao:p!1)8Jet@thresh.uops.top/video' /Volumes/thresh-video
+
+DOWNLOAD_DIR=/Volumes/video/youtube
+
+youtube:download:playlist() {
+    local NAME=$1
+    local URL=$2
+    echo $URL
+
+    mkdir -p ${DOWNLOAD_DIR}/${NAME} && cd ${DOWNLOAD_DIR}/${NAME}
+    youtube-dl --download-archive index.txt ${URL}
+}
+
+youtube:download:playlist swin https://www.youtube.com/playlist?list=PLOFLQd-wHzhc0vwx5AnUcA6qG4Y-nJc57
+youtube:download:playlist kids https://www.youtube.com/playlist?list=PLOFLQd-wHzhdJW8Q8ru95N2a1GEclaLvN
+youtube:download:playlist musicool-share https://www.youtube.com/playlist?list=PLOFLQd-wHzhca8XhVROZNK7TMmIiLtQda
+youtube:download:playlist musicool-bb https://www.youtube.com/playlist?list=PLOFLQd-wHzhfp2Fm08yE2GE8Nn1r91XbN

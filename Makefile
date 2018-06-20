@@ -1,3 +1,3 @@
-.PHONY: install-dev
-install-dev:
-	./install/dev.sh
+.PHONY: install
+install:
+	ln -s $(CURDIR)/main.sh /usr/local/bin/xy

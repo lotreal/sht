@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
-_WD=$( cd "$( dirname "$(readlink ${BASH_SOURCE})" )" && pwd -P )
-CMD=${_WD}/cmd
+set -o errexit
+set -o nounset
+set -o pipefail
+# set -o xtrace
+
+SCRIPT_ROOT=$( cd "$( dirname "$(readlink ${BASH_SOURCE})" )" && pwd -P )
+WORKDIR=$(pwd)
+CMD=${SCRIPT_ROOT}/cmd
 
 if [ "$#" -lt 1 ]; then
     cat <<EOF
@@ -13,6 +19,11 @@ Commands:
 EOF
     exit
 fi
+
+run() {
+    echo RUN: $@ && eval $@;
+}
+
 
 SUB=${CMD}/$1
 
