@@ -5,7 +5,12 @@ set -o pipefail
 # set -o xtrace
 
 SCRIPT_ROOT=$( cd "$( dirname "$(readlink ${BASH_SOURCE})" )" && pwd -P )
+
 WORKDIR=$(pwd)
+if [[ $WORKDIR == $HOME* ]]; then
+    WORKDIR=~${WORKDIR#$HOME}
+fi
+
 CMD=${SCRIPT_ROOT}/cmd
 
 if [ "$#" -lt 1 ]; then
