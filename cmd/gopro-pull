@@ -2,4 +2,4 @@
 GOPRO_LOCAL=/Users/luotao/Pictures/GoPro/
 GOPRO_REMOTE=thresh:/volume1/video/family/gopro/
 
-rsync -av $GOPRO_REMOTE $GOPRO_LOCAL
+run rsync -rltDv --exclude=.DS_Store --exclude=@eaDir $GOPRO_REMOTE $GOPRO_LOCAL
