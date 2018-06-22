@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
-GOPRO_LOCAL=/Users/luotao/Pictures/GoPro/
+MOVIE_RSYNC_OPTS="-rltDv --exclude=.DS_Store --exclude=@eaDir"
+# MOVIE_RSYNC_OPTS+=" --dry-run"
+
+GOPRO_LOCAL=/Users/luotao/Movies/GoPro/
 GOPRO_REMOTE=thresh:/volume1/video/family/gopro/
 
-run rsync -rltDv --exclude=.DS_Store --exclude=@eaDir $GOPRO_REMOTE $GOPRO_LOCAL
+run rsync $MOVIE_RSYNC_OPTS $GOPRO_REMOTE $GOPRO_LOCAL
+run rsync $MOVIE_RSYNC_OPTS \
+    thresh:/volume1/video/family/xy/ \
+    /Users/luotao/Movies/xy/
