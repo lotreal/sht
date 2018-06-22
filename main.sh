@@ -4,6 +4,30 @@ set -o nounset
 set -o pipefail
 # set -o xtrace
 
+# <-- GETOPT BEGIN
+# brew install gnu-getopt
+GETOPT=/usr/local/bin/getopt
+OPTS=`$GETOPT -o vnh --long verbose,dry-run,help -n 'parse-options' -- "$@"`
+
+if [ $? != 0 ] ; then echo "Failed parsing options." >&2 ; exit 1 ; fi
+
+eval set -- "$OPTS"
+
+VERBOSE=false
+HELP=false
+DRY_RUN=false
+
+while true; do
+    case "$1" in
+        -v | --verbose ) VERBOSE=true; shift ;;
+        -h | --help )    HELP=true; shift ;;
+        -n | --dry-run ) DRY_RUN=true; shift ;;
+        -- ) shift; break ;;
+        * ) break ;;
+    esac
+done
+# GETOPT END -->
+
 SCRIPT_ROOT=$( cd "$( dirname "$(readlink ${BASH_SOURCE})" )" && pwd -P )
 
 WORKDIR=$(pwd)
@@ -26,7 +50,15 @@ EOF
 fi
 
 run() {
-    echo RUN: $@ && eval $@;
+    echo RUN: $@
+
+    if [[ $DRY_RUN != true ]]; then
+        eval $@
+    fi
+}
+
+echo-and-run() {
+    echo RUN: $@ && eval $@
 }
 
 
@@ -36,5 +68,4 @@ shift
 
 ARG=$@
 
-echo source $SUB $ARG
 source $SUB $ARG

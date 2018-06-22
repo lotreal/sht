@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 MOVIE_RSYNC_OPTS="-rltDv --exclude=.DS_Store --exclude=@eaDir"
-# MOVIE_RSYNC_OPTS+=" --dry-run"
+if [[ $DRY_RUN == true ]]; then
+    MOVIE_RSYNC_OPTS+=" --dry-run"
+fi
 
 gopro-push() {
-    run rsync $MOVIE_RSYNC_OPTS \
+    echo-and-run rsync $MOVIE_RSYNC_OPTS \
         /Users/luotao/Movies/$1/ \
         thresh:/volume1/video/family/$1/
 }
