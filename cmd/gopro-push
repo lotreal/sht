@@ -2,10 +2,12 @@
 MOVIE_RSYNC_OPTS="-rltDv --exclude=.DS_Store --exclude=@eaDir"
 # MOVIE_RSYNC_OPTS+=" --dry-run"
 
-GOPRO_LOCAL=/Users/luotao/Movies/GoPro/
-GOPRO_REMOTE=thresh:/volume1/video/family/gopro/
+gopro-push() {
+    run rsync $MOVIE_RSYNC_OPTS \
+        /Users/luotao/Movies/$1/ \
+        thresh:/volume1/video/family/$1/
+}
 
-run rsync $MOVIE_RSYNC_OPTS $GOPRO_LOCAL $GOPRO_REMOTE
-run rsync $MOVIE_RSYNC_OPTS \
-    /Users/luotao/Movies/xy/ \
-    thresh:/volume1/video/family/xy/
+gopro-push xy
+gopro-push GoPro
+gopro-push FinalCut
