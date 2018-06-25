@@ -1,6 +1,3 @@
 #!/usr/bin/env bash
-source <(kubectl completion zsh)
-
-source /usr/local/share/kube-ps1.sh
-PROMPT='$(kube_ps1)'$PROMPT
-export PROMPT
+# eval $(xy kube)
+echo "source /usr/local/share/kube-ps1.sh && export PROMPT='\$(kube_ps1)'"

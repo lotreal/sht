@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
 run echo Usage
+ls -alh ${CMD}
