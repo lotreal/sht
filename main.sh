@@ -50,10 +50,11 @@ EOF
 fi
 
 run() {
-    echo RUN: $@
+    COMMAND_LINE="$@"
+    echo RUN: ${COMMAND_LINE}
 
     if [[ $DRY_RUN != true ]]; then
-        eval $@
+        eval ${COMMAND_LINE}
     fi
 }
 
