@@ -16,10 +16,6 @@ sync_image() {
     REMOTE=$(ssh $TARGET "docker inspect -f '{{ .Created }}' $IMAGE 2>/dev/null")
     set -o errexit
 
-    echo "R${REMOTE}R"
-    exit
-    REMOTE=""
-
     if [[ "${REMOTE}" == "" ]]; then
         if [[ "${LOCAL}" == "" ]]; then
             echo "ERR : can't find $IMAGE on localhost or ${TARGET}"
