@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+echo $VERBOSE
+echo $DRY_RUN
+
 ARG1=$1
 ARG2=$2
 ARG3=$3
