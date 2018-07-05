@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+DOCKER_IMAGES_LIST=$1
+
+docker-pull() {
+    ORIGIN_IMAGE_NAME=$1
+    NEW_IMAGE_NAME=hub.huwo.io/vendor/${ORIGIN_IMAGE_NAME/\//-}
+
+    run docker pull $NEW_IMAGE_NAME
+    run docker tag $NEW_IMAGE_NAME $ORIGIN_IMAGE_NAME
+}
+
+while IFS= read -r name
+do
+    docker-pull "$name"
+done < "$DOCKER_IMAGES_LIST"
