@@ -67,6 +67,4 @@ SUB=${CMD}/$1
 
 shift
 
-ARG=$@
-
-source $SUB $ARG
+source $SUB "$@"

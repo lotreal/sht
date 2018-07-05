@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+SYNC_HOST=$1
+DOCKER_IMAGES_LIST=$2
+
+cat $DOCKER_IMAGES_LIST | xargs -I % $CMD/docker-sync $SYNC_HOST %
