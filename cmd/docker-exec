@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-FILTER=$1
-shift
-
-COMMAND=${1:-bash}
+FILTER=${1:-}
+COMMAND=${2:-bash}
 
 if [ -z "$FILTER" ]; then
     CONTAINER=$(docker ps -lq)
