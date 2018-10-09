@@ -1,0 +1,16 @@
+rancher/rancher-agent:v2.1.0
+rancher/rancher:latest
+rancher/rke-tools:v0.1.15
+rancher/hyperkube:v1.11.3-rancher1
+rancher/nginx-ingress-controller:0.16.2-rancher1
+rancher/calico-node:v3.1.3
+rancher/calico-cni:v3.1.3
+rancher/k8s-dns-dnsmasq-nanny-amd64:1.14.10
+rancher/k8s-dns-kube-dns-amd64:1.14.10
+rancher/k8s-dns-sidecar-amd64:1.14.10
+rancher/coreos-etcd:v3.2.18
+rancher/coreos-flannel:v0.10.0
+rancher/pause-amd64:3.1
+rancher/metrics-server-amd64:v0.2.1
+rancher/nginx-ingress-controller-defaultbackend:1.4
+rancher/cluster-proportional-autoscaler-amd64:1.0.0
