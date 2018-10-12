@@ -8,6 +8,10 @@ docker-push() {
     docker pull $ORIGIN_IMAGE_NAME
     docker tag $ORIGIN_IMAGE_NAME $NEW_IMAGE_NAME
     docker push $NEW_IMAGE_NAME
+
+    run docker rmi $NEW_IMAGE_NAME
+    echo "[INFO] ${ORIGIN_IMAGE_NAME} push ok."
+    echo
 }
 
 while IFS= read -r name

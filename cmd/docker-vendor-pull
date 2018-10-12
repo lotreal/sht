@@ -10,6 +10,7 @@ docker-pull() {
 
     run docker rmi $NEW_IMAGE_NAME
     echo "[INFO] ${ORIGIN_IMAGE_NAME} pull ok."
+    echo
 }
 
 while IFS= read -r name
