@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+PROXY_HUB=${PROXY_HUB-hub.huwo.io/vendor}
+
+docker-push() {
+    ORIGIN_IMAGE=$1
+
+    PROXY_IMAGE=${ORIGIN_IMAGE}
+    PROXY_IMAGE=${ORIGIN_IMAGE//\//.}
+    PROXY_IMAGE=${PROXY_HUB}/${PROXY_IMAGE}
+
+    run docker pull $ORIGIN_IMAGE
+    run docker tag $ORIGIN_IMAGE $PROXY_IMAGE
+    run docker push $PROXY_IMAGE
+
+    # run docker rmi $PROXY_IMAGE
+    echo "[INFO] ${ORIGIN_IMAGE} => ${PROXY_IMAGE}."
+    echo
+}
+
+docker-push "$1"
