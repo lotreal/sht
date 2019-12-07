@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 HOST=$1
 
-run rsync -avzhe ssh --progress $HOST:$WORKDIR/ ./
+run rsync -avzhe ssh --progress $HOST:${SCRIPT_ROOT}/ ./

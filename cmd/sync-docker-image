@@ -11,8 +11,12 @@ sync_image() {
     local TARGET=$1
     local IMAGE=$2
 
-    LOCAL=$(docker inspect -f '{{ .Created }}' $IMAGE 2>/dev/null)
-    REMOTE=$(ssh $TARGET "docker inspect -f '{{ .Created }}' $IMAGE 2>/dev/null")
+    local LOCAL=$(docker inspect -f '{{ .Created }}' $IMAGE 2>/dev/null)
+    local REMOTE=
+
+    if [[ $(ssh $TARGET "docker images -q $IMAGE 2> /dev/null") != "" ]]; then
+        REMOTE=$(ssh $TARGET "docker inspect -f '{{ .Created }}' $IMAGE 2>/dev/null")
+    fi
 
     if [[ "${REMOTE}" == "" ]]; then
         if [[ "${LOCAL}" == "" ]]; then

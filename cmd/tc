@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-HOST=tc
 
-until knock 118.24.3.113 2610 514 1227 && ssh -o ConnectTimeout=3 $HOST; do
+until knock ${KNOCK_TARGET} && ssh -o ConnectTimeout=3 ${KNOCK_HOST}; do
     sleep 1
 done

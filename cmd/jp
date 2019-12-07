@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-HOST=jp
-
-until knock 47.74.21.175 2610 514 1227 && ssh -o ConnectTimeout=1 $HOST; do
-    sleep 1
-done

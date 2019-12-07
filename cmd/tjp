@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-HOST=tjp
-
-until knock 118.24.3.113 2610 514 1227 && ssh -o ConnectTimeout=1 $HOST; do
-    sleep 1
-done

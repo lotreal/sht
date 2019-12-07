@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 HOST=$1
+# if [[ ${SCRIPT_ROOT} == $HOME* ]]; then
+#     SCRIPT_ROOT=~${SCRIPT_ROOT#$HOME}
+# fi
 
-run ssh $HOST \"mkdir -p $WORKDIR\"
-run rsync -avzhe ssh --delete --progress $WORKDIR/ $HOST:$WORKDIR/
+run ssh $HOST \"mkdir -p ${SCRIPT_ROOT}\"
+run rsync -avzhe ssh --delete --progress ${SCRIPT_ROOT}/ $HOST:$WORKDIR/
