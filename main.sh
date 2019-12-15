@@ -5,8 +5,8 @@ set -euo pipefail
 
 SSD="$( cd "$( dirname "$(readlink ${BASH_SOURCE[0]})" )" >/dev/null 2>&1 && pwd )"
 
-source $SSD/dep.sh
-source $VENDOR/opts.vn.sh
+source $SSD/.dep.vendor.sh
+source $DEP_VENDOR/opts.vn.sh
 
 if [ "$#" -lt 1 ]; then
     cat $SSD/Usage.md
